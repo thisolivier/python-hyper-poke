@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block headline %}
+    <h1>Welcome Fool</h1>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col col-md-6 col-sm-12 reg_form">
+        <h2>Create</h2>
+        <form action="/portal/register" method="POST">
+            {{ reg_form | safe }}
+            <input type="submit" value="LIFE 2 CLAY" class="btn btn-info">
+            {% csrf_token %}
+        </form>
+    </div>
+    <div class="col col-md-6 col-sm-12 log_form">
+        <h2>Exist</h2>
+        <form action="/portal/login" method="POST">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password">
+            </div>
+            <input type="submit" value="REJOIN" class="btn btn-danger">
+            {% csrf_token %}
+        </form>
+    </div>
+</div>
+{% endblock %}

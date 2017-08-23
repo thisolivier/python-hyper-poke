@@ -1,0 +1,23 @@
+header{
+    margin: 1em 0 1.5em 0;
+}
+
+ul.list_group{
+    margin: 0 0 2em 0;
+    padding: 0;
+}
+
+.table_title{
+    margin-bottom: 1em;
+}
+
+.reg_form, .log_form{
+    padding: 1em;
+}
+
+.reg_form form, .log_form form{
+    border: 1px solid grey;
+    border-radius: 10px;
+    margin: 0 -0.5em;
+    padding : 1em;
+}

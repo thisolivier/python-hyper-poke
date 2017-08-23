@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block headline %}
+    <h1>Look's like {{ this_user.name }}!</h1>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+        <div class="col col-sm-12 col-md-8 into_facts">
+            <ul class="list_group">
+                <li class="list-group-item active">{{poked_by_no}} people poked you!</li>
+                {% for peep in evil_peeps %}
+                    <li class="list-group-item">{{ peep.name }} thrust at me {{ peep.count }} times</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+<div class="row">
+    <div class="col">
+        <h4 class="table_title">Life only gives us one chance, to poke...</h4>
+        <table class="table">
+            <thead>
+                <th>Name</th>
+                <th>Spirit Animal</th>
+                <th>Email</th>
+                <th>Life Worth</th>
+                <th>Retaliate</th>
+            </thead>
+            <tbody>
+                {% for user in fake_query %}
+                    <tr>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.fake_name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.count }}</td>
+                        <td><a href="/poke/attack/{{ user.user_id }}">Poke</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

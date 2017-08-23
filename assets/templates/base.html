@@ -1,0 +1,40 @@
+<!doctype HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <title>Poke Hard or Go Home | {% block title %}Hello{% endblock %}</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "style.css" %}">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col col-xs-12">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-warning">{{message | safe}}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <header class="row align-items-center">
+            <div class="col col-sm-10">
+                {% block headline %}
+                {% endblock %}
+            </div>
+            {% if request.session.logged_id %}
+                <div class="logout col col-sm-2">
+                    <a href="/portal/logout" class="btn btn-warning">Run Away</a>
+                </div>
+            {% endif %}
+        </header>
+        <main>
+        {% block content %}
+        {% endblock %}
+        </main>
+    </div>
+</body>
+</html>
