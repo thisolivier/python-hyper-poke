@@ -13,43 +13,41 @@ def show_all(req):
         return redirect('/')
     context = {
         'all_users' : User.objects.all().exclude(id=req.session['logged_id']),
-        'this_user' : User.objects.get(id=req.session['logged_id'])
+        'this_user' : User.objects.get(id=req.session['logged_id']),
+        'evil_peeps' : get_attackers(req),
     }
-    context['poked_by'] = context['this_user'].poked_by
-    context['poked_by_no'] = context['poked_by'].count()
-    context['evil_peeps'] = get_attackers(req)
-    context['fake_query'] = get_totals(req, context['this_user'])
+    context['poked_by_no'] = context['this_user'].poked_by.count()
+    context['fake_query'] = make_everyone(req, context['this_user'])
     return render(req, 'poking_app/dashboard.html', context)
 
 def get_attackers(req):
     #Get list of who poked me and how many times
     evil_doers = []
-    poked_me = Pokes.objects.filter(victim_id = req.session['logged_id']).order_by('count')
-    for poker in poked_me:
+    pokes_to_me = Pokes.objects.filter(victim_id = req.session['logged_id']).order_by('-count')
+    for poke in pokes_to_me:
         # we have the id of who poked me and the number of times they did
         # we must store their name, and count
-        attacker_id = poker.poker_id
+        attacker_id = poke.poker_id
         evil_doer = {
             'name' : User.objects.get(id=attacker_id).name,
-            'count' : poker.count
+            'count' : poke.count
         }
         evil_doers.append(evil_doer)
     return evil_doers
 
-def get_totals(req, my_user):
+def make_everyone(req, my_user):
     custom_query = []
     users = User.objects.all().exclude(id=req.session['logged_id'])
-    for user in users:
+    for user in users: 
         user_data = {}
         user_data['name'] = user.name
         user_data['email'] = user.email
         user_data['fake_name'] = user.fake_name
         user_data['user_id'] = user.id
         user_data['count'] = 0
-        maybe_pokes = Pokes.objects.filter(poker_id = req.session['logged_id'], victim_id = user.id)
-        if len(maybe_pokes) > 0:
-            user_data['count'] = maybe_pokes[0].count
-        print user_data['count']
+        pokes = Pokes.objects.filter(victim_id = user.id)
+        for poke in pokes:
+            user_data['count'] = user_data['count'] + poke.count
         custom_query.append(user_data)
     return custom_query
 
