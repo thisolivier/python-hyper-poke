@@ -21,3 +21,7 @@ ul.list_group{
     margin: 0 -0.5em;
     padding : 1em;
 }
+
+.account-meta{
+    text-align: right;
+}

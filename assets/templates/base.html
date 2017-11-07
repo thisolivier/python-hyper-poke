@@ -21,13 +21,14 @@
             </div>
         </div>
         <header class="row align-items-center">
-            <div class="col col-sm-10">
+            <div class="col col-sm-8">
                 {% block headline %}
                 {% endblock %}
             </div>
             {% if request.session.logged_id %}
-                <div class="logout col col-sm-2">
+                <div class="account-meta col col-sm-4">
                     <a href="/portal/logout" class="btn btn-warning">Run Away</a>
+                    <a href="/portal/delete" class="btn btn-danger">Delete Account</a>
                 </div>
             {% endif %}
         </header>

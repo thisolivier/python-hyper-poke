@@ -9,6 +9,12 @@ import bcrypt
 
 # Create your views here.
 def display_forms(req):
+    try:
+        int(req.session['logged_id'])
+        return redirect('/poke/view')
+    except:
+        pass
+        
     context = {
         'reg_form' : forms.reg_form(),
         'login_form' : None
