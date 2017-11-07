@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block headline %}
+    <h1>Danger Zone</h1>
+{% endblock %}
+
+{% block accountnav %}
+    <a href="/" class="btn btn-primary">Back to safety</a>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col col-md-6 col-sm-12 reg_form">
+        <h2>Are you sure you want to do this?</h2>
+        <p>If you are sure you want to delete your account, please enter your password below.</p>
+        <form action="/portal/delete" method="POST">
+            {{ delete_form | safe }}
+            <input type="submit" value="I'M READY" class="btn btn-danger">
+            {% csrf_token %}
+        </form>
+    </div>
+</div>
+{% endblock %}

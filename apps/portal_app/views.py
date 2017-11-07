@@ -8,7 +8,7 @@ from pytz import utc
 import bcrypt
 
 # Create your views here.
-def display_forms(req):
+def display_login(req):
     try:
         int(req.session['logged_id'])
         return redirect('/poke/view')
@@ -17,9 +17,23 @@ def display_forms(req):
         
     context = {
         'reg_form' : forms.reg_form(),
-        'login_form' : None
+        'login_form' : forms.login_form()
     }
     return render(req, 'portal_app/login_reg.html', context)
+
+def display_delete(req):
+    print "We hit the delete route"
+    try:
+        int(req.session['logged_id'])
+    except:
+        messages.error(req, 'The place you were trying to go... it\'s scary, login first.')
+        return redirect('/')
+    
+    context = {
+        'delete_form' : forms.delete_form()
+    }
+
+    return render(req, 'portal_app/delete.html', context)
 
 def process_login(req):
     results = req.POST
@@ -92,7 +106,23 @@ def bad_results(req, results):
             failed = True
     return failed
 
-def logout(req):
+def process_logout(req):
     del req.session['logged_id']
     messages.success(req, 'Leave! While I still allow it')
     return redirect('/')
+
+def process_delete(req):
+    print "We hit out processing route for delete"
+    # Check the password
+    results = req.POST
+    maybe_user = User.objects.get(id=req.session['logged_id'])
+    pw_good = bcrypt.checkpw(results['password'].encode(), maybe_user.password.encode())
+    
+    if pw_good:
+        maybe_user.delete()
+        del req.session['logged_id']
+        messages.success(req, 'Erased from history you have been...')
+        return redirect('/')
+    else:
+        messages.error(req, 'That password looks wrong, want to try again champ?')
+        return redirect('/confirmation')

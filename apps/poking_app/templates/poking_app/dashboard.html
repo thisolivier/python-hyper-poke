@@ -4,6 +4,11 @@
     <h1>Look's like {{ this_user.name }}!</h1>
 {% endblock %}
 
+{% block accountnav %}
+    <a href="/portal/logout" class="btn btn-warning">Run Away</a>
+    <a href="/portal/confirmation" class="btn btn-danger">Delete Account</a>
+{% endblock %}
+
 {% block content %}
 <div class="row">
         <div class="col col-sm-12 col-md-8 into_facts">

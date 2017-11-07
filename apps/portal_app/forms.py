@@ -35,3 +35,19 @@ def reg_form():
                     </div>
                 </div>
             </fieldset>"""
+
+def login_form():
+    return """<div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password">
+            </div>"""
+
+def delete_form():
+    return """<div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password">
+            </div>"""
